@@ -14,4 +14,5 @@ playground.py
 # TOML
 pyproject.toml
 
-resorces
+# service account file
+skip-push-notification_fsa.json
