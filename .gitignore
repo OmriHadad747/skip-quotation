@@ -1,6 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
+# pytest cache
+.pytest_cache
+
 # Environments
 .env
 venv
@@ -13,3 +16,6 @@ playground.py
 
 # TOML
 pyproject.toml
+
+# service account file
+skip-push-notification_fsa.json
