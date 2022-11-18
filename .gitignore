@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Environments
+.env
+venv
+
+# Playground
+playground.py
+
+# vscode
+.vscode
+
+# TOML
+pyproject.toml
