@@ -17,6 +17,7 @@ def create_app(app_config: config.BaseConfig) -> Flask:
         database.mongo.init_app(app)
 
         from app import routes
-        app.register_blueprint(routes.freelancer_finder_bp)
+
+        app.register_blueprint(routes.job_quotation_bp)
 
         return app
