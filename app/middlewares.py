@@ -31,7 +31,9 @@ def update_job_quotation(quote_func: Callable[[Any], Optional[Dict[str, Any]]]):
 
             app.logger.debug(f"updating job {job_id} in db with quotation data")
 
-            res = db.update_job(job_id, job, curr_job_status=job_model.JobStatusEnum.FREELANCER_FOUND)
+            res = db.update_job(
+                job_id, job, curr_job_status=job_model.JobStatusEnum.FREELANCER_FOUND
+            )
             if not res.acknowledged:
                 return err.db_op_not_acknowledged(job.dict(exclude_none=True), op="update")
 

@@ -1,7 +1,7 @@
 import flask
 import pydantic as pyd
 
-from typing import Any, Dict, List, Tuple
+from typing import Tuple
 from flask import jsonify
 from flask import current_app as app
 from firebase_admin import messaging
@@ -22,19 +22,17 @@ class JobQuotation:
     ) -> None:
         # TODO write docstring
         app.logger.info("notifying customer about job quotation")
-        
+
         msg = messaging.Message(
             data=quotation.quotation_to_str(), token=customer.registration_token
         )
-        resp = messaging.send(msg, dry_run=True)
+        # resp = messaging.send(msg, dry_run=True)
 
-        app.logger.debug(f"customer notified with message {resp}")
+        # app.logger.debug(f"customer notified with message {resp}")
 
     @classmethod
     @middlewares.update_job_quotation
-    def quote(
-        cls, job_id, quotation: job_model.JobQuotation
-    ) -> Tuple[flask.Response, int]:
+    def quote(cls, job_id, quotation: job_model.JobQuotation) -> Tuple[flask.Response, int]:
         """Retrieval of job by the given 'job_id',
         Retrieval of the corresponding customer and notify him about the quotation.
 

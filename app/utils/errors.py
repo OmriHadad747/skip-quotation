@@ -14,9 +14,7 @@ class Errors:
         return jsonify(err_msg=str(exc)), 400
 
     @classmethod
-    def db_op_not_acknowledged(
-        cls, obj: Dict[str, Any], op: str
-    ) -> Tuple[Dict[str, Any], int]:
+    def db_op_not_acknowledged(cls, obj: Dict[str, Any], op: str) -> Tuple[Dict[str, Any], int]:
         return (
             jsonify(err_msg=f"db operation {op.upper()} on {obj} doesn't acknowledged"),
             400,
@@ -24,6 +22,4 @@ class Errors:
 
     @classmethod
     def login_failed(cls):
-        return jsonify(
-            err_msg="failed to login, probably because invalid email or password"
-        )
+        return jsonify(err_msg="failed to login, probably because invalid email or password")
