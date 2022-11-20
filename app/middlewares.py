@@ -12,7 +12,7 @@ def update_job_quotation(quote_func: Callable[[Any], Optional[Dict[str, Any]]]):
     Validate given quotation fields and updates the incoming job in database.
 
     Args:
-        quote_func (Callable[[Any], Optional[Dict[str, Any]]]): Decorated function
+        quote_func (Callable[[Any], Optional[Dict[str, Any]]])
     """
 
     @wraps(quote_func)
@@ -47,3 +47,34 @@ def update_job_quotation(quote_func: Callable[[Any], Optional[Dict[str, Any]]]):
         return quote_func(_cls, job_id, quotation)
 
     return update_job_quotation_wrapper
+
+
+def update_job_approved(approved_func: Callable[[Any], Optional[Dict[str, Any]]]):
+    """Updating a job that it is approved.
+
+    Args:
+        approved_func (Callable[[Any], Optional[Dict[str, Any]]])
+    """
+
+    @wraps(approved_func)
+    def update_job_approved_wrapper(*args):
+        _cls = args[0]
+        job_id: str = args[1]
+
+        try:
+            job = job_model.JobUpdate(**{"job_status": job_model.JobStatusEnum.APPROVED})
+
+            res = db.update_job(
+                job_id, job, curr_job_status=job_model.JobStatusEnum.FREELANCER_FOUND
+            )
+            if not res.acknowledged:
+                return err.db_op_not_acknowledged(job.dict(exclude_none=True), op="update")
+
+        except pyd.ValidationError as e:
+            return err.validation_error(e)
+        except Exception as e:
+            return err.general_exception(e)
+
+        return approved_func(_cls, job_id)
+
+    return update_job_approved_wrapper

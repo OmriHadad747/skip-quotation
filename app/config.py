@@ -41,11 +41,13 @@ class DevConfig(BaseConfig):
     FREELANCER_COLLECTION = environ.get("FREELANCER_COLLECTION_DEV")
     JOB_COLLECTION = environ.get("JOB_COLLECTION_DEV")
 
-    # crud service
-    CRUD_HOST = "localhost:5000"
-
     # FIREBASE
     FIREBASE_SERVICE_ACCOUNT = environ.get("FIREBASE_SERVICE_ACCOUNT_DEV")
+
+
+class LocalDevInDockerConfig(DevConfig):
+    # MongoDB
+    MONGO_URI = environ.get("MONGO_URI_DEV_DOCKER")
 
 
 class TestConfig(BaseConfig):
