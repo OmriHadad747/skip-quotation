@@ -107,7 +107,7 @@ class JobQuotation:
         return jsonify(message=f"notification pushed to customer {customer.email}"), 200
 
     @classmethod
-    @middlware.update_job_approved
+    @middlware.update_job_approved_or_declined
     def approve(cls, job_id: str) -> Tuple[flask.Response, int]:
         try:
             # get corresponding job
