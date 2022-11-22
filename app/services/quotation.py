@@ -5,14 +5,15 @@ from typing import List, Tuple
 from flask import jsonify
 from flask import current_app as app
 from firebase_admin import messaging
-from app import middlewares
-from app.utils.errors import Errors as err
-from skip_db_lib.models import job as job_model
-from skip_db_lib.models import customer as customer_model
-from skip_db_lib.models import freelancer as freelancer_model
-from skip_db_lib.database.freelancers import FreelancerDatabase as freelancers_db
-from skip_db_lib.database.jobs import JobDatabase as jobs_db
-from skip_db_lib.database.customers import CustomerDatabase as customers_db
+
+from skip_common_lib.middleware import job_quotation as middlware
+from skip_common_lib.utils.errors import Errors as err
+from skip_common_lib.models import job as job_model
+from skip_common_lib.models import customer as customer_model
+from skip_common_lib.models import freelancer as freelancer_model
+from skip_common_lib.database.freelancers import FreelancerDatabase as freelancers_db
+from skip_common_lib.database.jobs import JobDatabase as jobs_db
+from skip_common_lib.database.customers import CustomerDatabase as customers_db
 
 
 class JobQuotation:
@@ -75,7 +76,7 @@ class JobQuotation:
         app.logger.debug(f"customer and freelancer are both notified")
 
     @classmethod
-    @middlewares.update_job_quotation
+    @middlware.update_job_quotation
     def quote(cls, job_id, quotation: job_model.JobQuotation) -> Tuple[flask.Response, int]:
         """Retrieval of job by the given 'job_id',
         Retrieval of the corresponding customer and notify him about the quotation.
@@ -106,7 +107,7 @@ class JobQuotation:
         return jsonify(message=f"notification pushed to customer {customer.email}"), 200
 
     @classmethod
-    @middlewares.update_job_approved
+    @middlware.update_job_approved
     def approve(cls, job_id: str) -> Tuple[flask.Response, int]:
         try:
             # get corresponding job

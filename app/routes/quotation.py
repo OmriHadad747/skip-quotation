@@ -2,6 +2,7 @@ import flask
 
 from typing import Tuple
 from flask import Blueprint, request
+
 from app.services.quotation import JobQuotation
 
 
