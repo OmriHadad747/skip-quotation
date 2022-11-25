@@ -1,7 +1,7 @@
 FROM tiangolo/uwsgi-nginx:python3.10
 
 
-ENV APP_DIR /skip-crud-service
+ENV APP_DIR /skip-quotation
 
 
 # update and install packages
@@ -23,10 +23,10 @@ RUN pip3 install --upgrade pip
 WORKDIR ${APP_DIR}
 
 
-ADD app ./app
-ADD resources ./resources
-ADD requirements ./
-ADD run.py ./
+ADD skip-quotation/app ./app
+ADD skip-quotation/resources ./resources
+ADD skip-quotation/requirements ./
+ADD skip-quotation/run.py ./
 
 
 RUN  pip3 install -r requirements --no-cache-dir

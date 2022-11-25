@@ -14,11 +14,6 @@ def post_quotation(job_id: str) -> Tuple[flask.Response, int]:
     return JobQuotation.quote(job_id, request.json)
 
 
-@job_quotation_bp.post("/quotation/approve/<string:job_id>")
-def approve_quotation(job_id: str) -> Tuple[flask.Response, int]:
-    return JobQuotation.approve(job_id)
-
-
-@job_quotation_bp.post("/quotation/decline/<string:job_id>")
-def decline_quotation(job_id: str) -> Tuple[flask.Response, int]:
-    return JobQuotation.decline(job_id, request.json)
+@job_quotation_bp.post("/quotation/<string:job_id>/confirm")
+def confirm_quotation(job_id: str) -> Tuple[flask.Response, int]:
+    return JobQuotation.confirm(job_id, request.args.get("confirmation", False, type=bool))
